@@ -46,7 +46,7 @@ const getAllUsers = (req, res) => {
 	database
 		.query("select * from users")
 		.then(([users]) => {
-			res.json(users[0]);
+			res.json(users);
 		})
 		.catch((err) => {
 			console.error(err);
@@ -111,7 +111,7 @@ const postUsers = (req, res) => {
 
 	database
 		.query(
-			"INSERT INTO movies(id,firstname,lastname,email,city,language) VALUES (?,?,?,?,?,?))",
+			"INSERT INTO users(id, firstname, lastname, email, city, language) VALUES (?, ?, ?, ?, ?, ?)",
 			[id, firstname, lastname, email, city, language]
 		)
 		.then(([result]) => {
