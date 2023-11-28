@@ -58,12 +58,11 @@ describe("POST /api/movies", () => {
 		expect(movieInDatabase).toHaveProperty("year");
 		expect(movieInDatabase).toHaveProperty("color");
 		expect(movieInDatabase).toHaveProperty("duration");
-		expect(typeof movieInDatabase.title).toBe("string");
-		expect(typeof movieInDatabase.director).toBe("string");
-		expect(typeof movieInDatabase.year).toBe("string");
-		expect(typeof movieInDatabase.color).toBe("string");
-		expect(typeof movieInDatabase.duration).toBe("number");
 		expect(movieInDatabase.title).toStrictEqual(newMovie.title);
+		expect(movieInDatabase.director).toStrictEqual(newMovie.director);
+		expect(movieInDatabase.year).toStrictEqual(newMovie.year);
+		expect(movieInDatabase.color).toStrictEqual(newMovie.color);
+		expect(movieInDatabase.duration).toStrictEqual(newMovie.duration);
 	});
 
 	it("should return an error", async () => {
