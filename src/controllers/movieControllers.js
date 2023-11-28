@@ -34,7 +34,7 @@ const getMovies = (req, res) => {
 			const movies = result[0];
 			res.json(movies);
 
-			console.log(movies);
+			// console.log(movies);
 		})
 		.catch((err) => {
 			console.error(err);
@@ -101,7 +101,6 @@ const postMovie = (req, res) => {
 			res.status(201).send({ id: result.insertId });
 		})
 		.catch((err) => {
-			console.error(err);
 			res.sendStatus(500);
 		});
 };
@@ -123,6 +122,52 @@ const postUsers = (req, res) => {
 		});
 };
 
+// in src/controllers/movieControllers.js
+
+const updateMovie = (req, res) => {
+	const id = parseInt(req.params.id);
+	const { title, director, year, color, duration } = req.body;
+
+	database
+		.query(
+			"update movies set title = ?, director = ?, year = ?, color = ?, duration = ? where id = ?",
+			[title, director, year, color, duration, id]
+		)
+		.then(([result]) => {
+			if (result.affectedRows === 0) {
+				res.sendStatus(404);
+			} else {
+				res.sendStatus(204);
+			}
+		})
+		.catch((err) => {
+			console.error(err);
+			res.sendStatus(500);
+		});
+};
+
+const updateUsers = (req, res) => {
+	const id = parseInt(req.params.id);
+	const { firstname, lastname, email, city, language } = req.body;
+
+	database
+		.query(
+			"update users set firstname = ?, lastname = ?, email = ?, city = ?, language = ? where id = ?",
+			[firstname, lastname, email, city, language, id]
+		)
+		.then(([result]) => {
+			if (result.affectedRows === 0) {
+				res.sendStatus(404);
+			} else {
+				res.sendStatus(204);
+			}
+		})
+		.catch((err) => {
+			console.error(err);
+			res.sendStatus(500);
+		});
+};
+
 module.exports = {
 	getMovies,
 	getMovieById,
@@ -130,4 +175,6 @@ module.exports = {
 	getUsersById,
 	getAllUsers,
 	postUsers,
+	updateMovie,
+	updateUsers,
 };
