@@ -52,7 +52,6 @@ describe("POST /api/movies", () => {
 			response.body.id
 		);
 		const [movieInDatabase] = result;
-		console.log(movieInDatabase.title);
 		expect(movieInDatabase).toHaveProperty("id");
 		expect(movieInDatabase).toHaveProperty("title");
 		expect(movieInDatabase).toHaveProperty("director");
