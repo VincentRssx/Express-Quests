@@ -147,4 +147,18 @@ describe("PUT /api/movies/:id", () => {
 
 		expect(response.status).toEqual(500);
 	});
+
+	it("should return no movie", async () => {
+		const newMovie = {
+			title: "Avatar",
+			director: "James Cameron",
+			year: "2009",
+			color: "1",
+			duration: 162,
+		};
+
+		const response = await request(app).put("/api/movies/0").send(newMovie);
+
+		expect(response.status).toEqual(404);
+	});
 });

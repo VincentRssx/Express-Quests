@@ -112,19 +112,14 @@ describe("PUT /api/users/:id", () => {
 		const [usersInDatabase] = users;
 
 		expect(usersInDatabase).toHaveProperty("id");
-
 		expect(usersInDatabase).toHaveProperty("firstname");
 		expect(usersInDatabase.firstname).toStrictEqual(updatedUsers.firstname);
-
 		expect(usersInDatabase).toHaveProperty("lastname");
 		expect(usersInDatabase.lastname).toStrictEqual(updatedUsers.lastname);
-
 		expect(usersInDatabase).toHaveProperty("email");
 		expect(usersInDatabase.email).toStrictEqual(updatedUsers.email);
-
 		expect(usersInDatabase).toHaveProperty("city");
 		expect(usersInDatabase.city).toStrictEqual(updatedUsers.city);
-
 		expect(usersInDatabase).toHaveProperty("language");
 		expect(usersInDatabase.language).toStrictEqual(updatedUsers.language);
 	});
@@ -137,5 +132,19 @@ describe("PUT /api/users/:id", () => {
 			.send(usersWithMissingProps);
 
 		expect(response.status).toEqual(500);
+	});
+
+	it("should return no movie", async () => {
+		const newUser = {
+			title: "Avatar",
+			director: "James Cameron",
+			year: "2009",
+			color: "1",
+			duration: 162,
+		};
+
+		const response = await request(app).put("/api/movies/0").send(newUser);
+
+		expect(response.status).toEqual(404);
 	});
 });
