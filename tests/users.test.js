@@ -63,12 +63,21 @@ describe("POST /api/users", () => {
 		expect(typeof usersInDatabase.email).toBe("string");
 		expect(typeof usersInDatabase.city).toBe("string");
 		expect(typeof usersInDatabase.language).toBe("string");
-		expect(usersInDatabase.title).toStrictEqual(newUser.title);
+		expect(usersInDatabase.firstname).toStrictEqual(newUser.firstname);
+	});
+	it("should return an error", async () => {
+		const usersWithMissingProps = { firstname: "Harry Potter" };
+
+		const response = await request(app)
+			.post("/api/users")
+			.send(usersWithMissingProps);
+
+		expect(response.status).toEqual(422);
 	});
 });
 
 describe("PUT /api/users/:id", () => {
-	it("should edit movie", async () => {
+	it("should edit user", async () => {
 		const newUser = {
 			firstname: "Maria",
 			lastname: "Martine",
@@ -92,7 +101,7 @@ describe("PUT /api/users/:id", () => {
 
 		const updatedUsers = {
 			firstname: "Maria",
-			lastname: "Martine",
+			lastname: "Martina",
 			email: `${crypto.randomUUID()}@wild.co`,
 			city: "Lille",
 			language: "French",
@@ -125,25 +134,25 @@ describe("PUT /api/users/:id", () => {
 	});
 
 	it("should return an error", async () => {
-		const usersWithMissingProps = { title: "Harry Potter" };
+		const usersWithMissingProps = { firstname: "Harry Potter" };
 
 		const response = await request(app)
 			.put(`/api/users/1`)
 			.send(usersWithMissingProps);
 
-		expect(response.status).toEqual(500);
+		expect(response.status).toEqual(422);
 	});
 
-	it("should return no movie", async () => {
+	it("should return no user", async () => {
 		const newUser = {
-			title: "Avatar",
-			director: "James Cameron",
-			year: "2009",
-			color: "1",
-			duration: 162,
+			firstname: "Maria",
+			lastname: "Martine",
+			email: `${crypto.randomUUID()}@wild.co`,
+			city: "Lille",
+			language: "French",
 		};
 
-		const response = await request(app).put("/api/movies/0").send(newUser);
+		const response = await request(app).put("/api/users/0").send(newUser);
 
 		expect(response.status).toEqual(404);
 	});
